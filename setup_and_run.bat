@@ -109,7 +109,7 @@ echo.
 REM Check if app.py exists and start it
 if exist "app.py" (
     echo ✓ app.py found
-    echo The app will be available at: http://127.0.0.1:5000
+    echo The app will be available at: http://127.0.0.1:5001
     echo Press Ctrl+C to stop the server
     echo.
     echo Starting Flask application...
