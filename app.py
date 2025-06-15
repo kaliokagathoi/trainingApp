@@ -7,7 +7,7 @@ try:
     import options_ladder_fast
 
     CYTHON_AVAILABLE = True
-    print("✓ Successfully imported options_ladder_fast")
+    print("Successfully imported options_ladder_fast")
 
     # Check what functions are available
     available_functions = [attr for attr in dir(options_ladder_fast) if not attr.startswith('_')]
@@ -19,12 +19,12 @@ try:
     missing_functions = [func for func in required_functions if not hasattr(options_ladder_fast, func)]
 
     if missing_functions:
-        print(f"⚠️  Missing functions: {missing_functions}")
+        print(f"Missing functions: {missing_functions}")
         print("You may need to recompile the Cython module with the latest code.")
 
 except ImportError as e:
     CYTHON_AVAILABLE = False
-    print(f"✗ Failed to import options_ladder_fast: {e}")
+    print(f"Failed to import options_ladder_fast: {e}")
     print("Please compile first with: python setup.py build_ext --inplace")
 
 app = Flask(__name__)

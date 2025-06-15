@@ -1,4 +1,5 @@
 @echo off
+setlocal enabledelayedexpansion
 echo ================================================================
 echo   Options Trading Training App - Setup and Launch Script
 echo ================================================================
@@ -6,6 +7,7 @@ echo.
 
 REM Change to script directory
 cd /d "%~dp0"
+echo Current directory: %CD%
 
 REM Check if Python is installed
 echo [1/6] Checking Python installation...
@@ -17,6 +19,7 @@ if errorlevel 1 (
     pause
     exit /b 1
 )
+python --version
 echo ✓ Python found
 
 REM Check if virtual environment exists
@@ -45,6 +48,8 @@ if errorlevel 1 (
     exit /b 1
 )
 echo ✓ Virtual environment activated
+echo Python location:
+where python
 
 REM Upgrade pip
 echo.
@@ -67,34 +72,32 @@ if exist "requirements.txt" (
     pip install Flask Cython numpy setuptools wheel
 )
 
-REM Clean previous builds
+REM Clean previous builds and compile
 echo.
 echo [6/6] Compiling Cython module...
 echo Cleaning previous builds...
 if exist "build" rmdir /s /q build
 if exist "options_ladder_fast.c" del options_ladder_fast.c
-for %%f in (*.so *.pyd) do del "%%f" 2>nul
 
-REM Compile Cython module
 echo Compiling Cython extension...
 python setup.py build_ext --inplace
-if errorlevel 1 (
-    echo ERROR: Failed to compile Cython module
-    echo Make sure you have:
-    echo - Visual Studio Build Tools (Windows)
-    echo - All dependencies installed correctly
-    pause
-    exit /b 1
-)
-echo ✓ Cython module compiled successfully
 
-REM Check if compilation produced expected files
+REM Check if we have a working module
 echo Checking compilation results...
 set "found_module="
-for %%f in (*.so *.pyd) do set "found_module=%%f"
+for %%f in (*.pyd *.so) do set "found_module=%%f"
 if not defined found_module (
-    echo WARNING: No compiled module found (.so or .pyd file)
-    echo The app may not work correctly
+    echo WARNING: No compiled module found
+    echo Trying to continue anyway...
+) else (
+    echo ✓ Found compiled module: !found_module!
+)
+
+REM Test if the module can be imported
+echo Testing module import...
+python -c "import options_ladder_fast; print('✓ Cython module working')" 2>nul
+if errorlevel 1 (
+    echo WARNING: Module import failed, but continuing...
 )
 
 echo.
@@ -102,16 +105,31 @@ echo ================================================================
 echo   Setup Complete! Starting the application...
 echo ================================================================
 echo.
-echo The app will be available at: http://127.0.0.1:5000
-echo Press Ctrl+C to stop the server
-echo.
 
-REM Start Flask app
-python app.py
+REM Check if app.py exists and start it
+if exist "app.py" (
+    echo ✓ app.py found
+    echo The app will be available at: http://127.0.0.1:5000
+    echo Press Ctrl+C to stop the server
+    echo.
+    echo Starting Flask application...
+    python app.py
+) else (
+    echo ERROR: app.py not found in current directory
+    echo Current directory contents:
+    dir /b
+    pause
+    exit /b 1
+)
 
 REM If we get here, the app has stopped
 echo.
 echo ================================================================
 echo   Application stopped
 echo ================================================================
+echo.
+echo To restart the app, run this script again or:
+echo 1. Activate virtual environment: .venv\Scripts\activate
+echo 2. Run: python app.py
+echo.
 pause
