@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mock Practice</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Mock Trading - Training Exercises</h1>
+            <p class="subtitle">Options Ladder Practice</p>
+        </header>
+
+        <div class="controls-section">
+            <div class="control-group">
+                <label for="use-spreads">Exercise Type:</label>
+                <select id="use-spreads">
+                    <option value="false">Simple (Prices Only)</option>
+                    <option value="true">Advanced (With Spreads)</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="num-strikes">Number of Strikes:</label>
+                <input type="number" id="num-strikes" min="3" max="10" value="5">
+            </div>
+
+            <button id="generate-btn" class="btn btn-primary">Generate New Exercise</button>
+        </div>
+
+        <div class="timer-section" id="timer-section" style="display: none;">
+            <div class="timer">
+                <span class="timer-label">Time:</span>
+                <span id="timer-display">00:00</span>
+            </div>
+        </div>
+
+        <div class="exercise-section" id="exercise-section" style="display: none;">
+            <div class="market-info" id="market-info">
+                <!-- Market information will be populated here -->
+            </div>
+
+            <div class="exercise-content" id="exercise-content">
+                <!-- Exercise content will be populated here -->
+            </div>
+
+            <div class="submit-section">
+                <button id="submit-btn" class="btn btn-success">Submit Answers</button>
+            </div>
+        </div>
+
+        <div class="results-section" id="results-section" style="display: none;">
+            <h3>Results</h3>
+            <div class="score-summary" id="score-summary">
+                <!-- Score summary will be populated here -->
+            </div>
+            <div class="detailed-results" id="detailed-results">
+                <!-- Detailed results will be populated here -->
+            </div>
+            <button id="new-exercise-btn" class="btn btn-primary">Generate New Exercise</button>
+        </div>
+
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <p>Generating exercise...</p>
+        </div>
+
+        <div class="error-section" id="error-section" style="display: none;">
+            <div class="error-message" id="error-message"></div>
+            <button id="retry-btn" class="btn btn-secondary">Try Again</button>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
