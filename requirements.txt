@@ -1,4 +1,5 @@
-cython>=0.29.0
-numpy>=1.19.0
-scipy>=1.5.0
-setuptools>=40.0.0
+Flask==2.3.3
+Cython==3.0.2
+numpy==1.24.3
+setuptools==68.2.2
+wheel==0.41.2
