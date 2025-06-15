@@ -233,10 +233,6 @@ This application is designed for:
 - **Spread Trading**: Risk management through combination strategies
 - **Arbitrage Detection**: Identifying mispriced option combinations
 
-## 📄 Licence
-
-This project is licensed under the MIT Licence - see the [LICENSE](LICENSE) file for details.
-
 ## 🙏 Acknowledgements
 
 - Built with Flask (Python web framework)
