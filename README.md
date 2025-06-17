@@ -1,3 +1,6 @@
+### current known issues:
+- call (put) spread prices are not monotonically decreasing (increasing) with increasing K / strike
+
 # Options Trading Training App
 
 A comprehensive web-based training application for practising options ladder exercises with put-call parity and spread calculations. Perfect for finance students, trading professionals, and anyone looking to sharpen their derivatives knowledge.
